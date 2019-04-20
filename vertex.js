@@ -27,9 +27,9 @@ class Vertex{
 }
 
 class Shape{
-    constructor(v, c = new Colour()){
+    constructor(v, colour = new Colour()){
         this.vertices = [v];
-        this.colour = c;
+        this.c = colour;
         this.finished = false;
         shapes.push(this);
     }
@@ -46,17 +46,17 @@ class Shape{
 
     doubleClicked(){
         this.finished = true;
-        this.colour.changeAlpha(128);
+        this.c.changeAlpha(128);
     }
 
     draw(){
         beginShape();
-        let c = color(this.colour.R, this.colour.G, this.colour.B, this.colour.A);
-        fill(c);
+        let colour = color(this.c.R, this.c.G, this.c.B, this.c.A);
+        fill(colour);
         for (let v of this.vertices){
             push();
-            if (this.finished){
-                if (v.mouseDistance(mouseX, mouseY, 10)) stroke(255, 255, 255);
+            if (this.finished && mode === "edicao"){
+                if (v.mouseDistance(mouseX, mouseY) <= 10) stroke(255, 255, 255);
                 else stroke(0,0,0);
             }
             vertex(v.x, v.y);

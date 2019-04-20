@@ -2,27 +2,6 @@ function mouseInside(){
     return ((0 <= mouseX) && (mouseX <= width) && (0 <= mouseY) && (mouseY <= height));
 }
 
-function setup() {
-    createCanvas(innerWidth,innerHeight);
-    checkedRadio();
-}
-
-// Keeps old polygons/rays on-screen.
-function draw() {
-    background(200);
-    
-    if (mouseIsPressed){
-        noFill();
-        ellipse(mouseX, mouseY, 25, 25);
-    }
-    
-    // desenharShapeAtual();
-    desenharShapes();
-    desenharExtensao();
-    desenharRay();
-    checarDistancia();
-}
-
 // Inserts position of mouse when pressed into vertex array.
 function mousePressed(){
     if (!mouseInside()) return;
@@ -40,7 +19,7 @@ function mousePressed(){
             }
             
             else{*/
-                let r = new Ray(v);
+                let r = new Ray(v, 40);
                 //}
         }
         if (mode === "shape"){
@@ -83,3 +62,26 @@ function doubleClicked(){
 //     else mode = "shape";
 //     vertices = [];
 // }
+
+function setup() {
+    createCanvas(innerWidth,innerHeight);
+    checkedRadio(0);
+}
+
+// Keeps old polygons/rays on-screen.
+function draw() {
+    background(200);
+    
+    push();
+    noFill();
+    if (mouseIsPressed) stroke(255, 255, 255);
+    else stroke(0, 0, 0);
+    ellipse(mouseX, mouseY, 20, 20);
+    pop();
+    
+    // desenharShapeAtual();
+    desenharShapes();
+    // desenharExtensao();
+    desenharRay();
+    checarDistancia();
+}
