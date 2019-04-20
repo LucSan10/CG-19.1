@@ -1,62 +1,44 @@
-let modo;
+let mode;
+let drawing = false;
+
+function lastShape(){
+    return shapes[shapes.length-1];
+}
+
+function cancelDrawing(){
+    if (mode !== "shape"){
+        if (!lastShape().finished) shapes.pop();
+    }
+}
 
 function checkedRadio(){
     let modes = document.getElementById("radioDiv").children;
-    for (let mode of modes){
-        if (mode.checked) modo = mode.value;
+    for (let m of modes){
+        if (m.checked) mode = m.value;
     }
-    vertices = [];
+    cancelDrawing();
 }
 //------------Only-Polygons------------
 
 // Array of polygons
-let poligonos = [];
+let shapes = [];
 // Polygon = {points, color}
 
-// Array of vertices 
-let vertices = [];
-// Vertex = {x, y}
-
-let cor;
+let colour;
 
 //------------Only-Rays----------------
 
-let raios = [];
+let rays = [];
 
-class Vertice{
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-        this.underMouse = false;
-        this.locked = false;
-    }
-    
-    mouseDistance(bx, by){
-        let deltaX = Math.pow(this.x - bx, 2);
-        let deltaY = Math.pow(this.y - by, 2);
-        let distance = Math.sqrt(deltaX + deltaY);
-        return distance;
-    }
 
-    move(bx, by, offX, offY){
-        this.x = bx - offX;
-        this.y = by - offY;
-    }
-}
 
-class Poligono{
-    constructor(v, c){
-        this.vertices = v;
-        this.cor = c;
-    }
-}
-
-class Raio{
+class Ray{
     constructor(v){
         this.v = v;
         this.ang = Math.random() * 2 * Math.PI;
         this.alpha = 255;
         this.underMouse = false;
+        rays.push(this);
     }
 
     updateAngle(px, py){
@@ -65,7 +47,7 @@ class Raio{
         this.ang = atan2(deltaY,deltaX);
     }
     
-    incrementAlpha(){
+    phaseOut(){
         this.alpha -= 2.5;
         if (this.alpha < 10) this.alpha = 255;
     }
@@ -102,8 +84,25 @@ class Raio{
 //     }
 // }
 
-function randomColor(){
+function random255(){
     return Math.floor(Math.random() * 256);
+}
+
+class Colour{
+    constructor(){
+        this.R = random255();
+        this.G = random255();
+        this.B = random255();
+        this.A = 255;
+    }
+
+    changeAlpha(alpha){
+        this.A = alpha;
+    }
+}
+
+function randomColor(alpha = 255){
+    return color(random255(), random255(), random255(), alpha);
 }
 
 // let selecionado = new Selected();

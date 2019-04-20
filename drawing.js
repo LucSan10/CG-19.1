@@ -1,10 +1,10 @@
 function checarDistancia(){
-    if (modo === "raio"){
-        for (let r of raios){
+    if (mode === "ray"){
+        for (let r of rays){
             let tempX = 5*cos(r.ang);
             let tempY = 5*sin(r.ang);
             
-            let offset = new Vertice(
+            let offset = new Vertex(
                 40*cos(r.ang) + tempX*Math.sqrt(3)/3,
                 40*sin(r.ang) + tempY*Math.sqrt(3)/3
             );
@@ -21,9 +21,9 @@ function checarDistancia(){
     }
 }
 
-function desenharRaio(){
-    for (let r of raios){
-        let rayEnd = new Vertice(
+function desenharRay(){
+    for (let r of rays){
+        let rayEnd = new Vertex(
             r.v.x + 40*cos(r.ang),
             r.v.y + 40*sin(r.ang)
         )
@@ -64,7 +64,7 @@ function desenharTriangulo(r, rayEnd, tempX, tempY){
 }
 
 function desenharExtensao(){
-    for (let r of raios){
+    for (let r of rays){
         let lineEndX = 0;
         let lineEndY = 0;
 
@@ -83,7 +83,7 @@ function desenharExtensao(){
             }
         }
 
-        r.incrementAlpha();
+        r.phaseOut();
 
         push();
         stroke(0,0,0,r.alpha);
@@ -93,28 +93,29 @@ function desenharExtensao(){
 }
 
 // Draws new polygons.
-function desenharPoligonos(){
-    beginShape();
-    fill(cor);
-    for (let vertice of vertices){
-        vertex(vertice.x, vertice.y);
-    }
-    vertex(mouseX,mouseY);
-    endShape(CLOSE);
-}
+// function desenharShapeAtual(){
+//     beginShape();
+//     fill(colour);
+//     for (let v of vertices){
+//         vertex(v.x, v.y);
+//     }
+//     vertex(mouseX,mouseY);
+//     endShape(CLOSE);
+// }
 
-function desenharPoligonoAtual(){
-    for (let poligono of poligonos){
-        beginShape();
-        let vert = poligono.vertices;
-        for(let v of vert){
-            push();
-            if (v.mouseDistance(mouseX, mouseY, 10)) stroke(255,255,255);
-            else stroke(0,0,0);
-            vertex(v.x, v.y);
-            pop();
-        }
-        fill(poligono.cor);
-        endShape(CLOSE);
+function desenharShapes(){
+    for (let shape of shapes){
+        // beginShape();
+        // let vert = shape.vertices;
+        // for(let v of vert){
+        //     push();
+        //     if (v.mouseDistance(mouseX, mouseY, 10)) stroke(255,255,255);
+        //     else stroke(0,0,0);
+        //     vertex(v.x, v.y);
+        //     pop();
+        // }
+        // fill(shape.colour);
+        // endShape(CLOSE);
+        shape.draw();
     }
 }

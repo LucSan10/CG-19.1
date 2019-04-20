@@ -5,7 +5,6 @@ function mouseInside(){
 function setup() {
     createCanvas(innerWidth,innerHeight);
     checkedRadio();
-    cor = color(randomColor(), randomColor(), randomColor(), 128);
 }
 
 // Keeps old polygons/rays on-screen.
@@ -17,10 +16,10 @@ function draw() {
         ellipse(mouseX, mouseY, 25, 25);
     }
     
-    desenharPoligonoAtual();
-    desenharPoligonos();
+    // desenharShapeAtual();
+    desenharShapes();
     desenharExtensao();
-    desenharRaio();
+    desenharRay();
     checarDistancia();
 }
 
@@ -28,10 +27,10 @@ function draw() {
 function mousePressed(){
     if (!mouseInside()) return;
     else{
-        let v = new Vertice(mouseX, mouseY);
-        if (modo === "raio"){
-            let rIndex = raios.findIndex(r => r.underMouse === true);
-            let vIndex = raios.findIndex(r => r.v.underMouse === true);
+        let v = new Vertex(mouseX, mouseY);
+        if (mode === "ray"){
+            let rIndex = rays.findIndex(r => r.underMouse === true);
+            let vIndex = rays.findIndex(r => r.v.underMouse === true);
             
             //print(rIndex);
             //print(vIndex);
@@ -41,17 +40,26 @@ function mousePressed(){
             }
             
             else{*/
-                let r = new Raio(v);
-                raios.push(r);
+                let r = new Ray(v);
                 //}
+        }
+        if (mode === "shape"){
+            if (shapes.length > 0){
+                console.log(lastShape());
+                if (!lastShape().finished){
+                    lastShape().mousePressed();
+                    return;
+                }
             }
-            else vertices.push(v);
+            new Shape(v);
+            console.log(shapes.length);
+        }
     }
 }
 
 function mouseDragged(){
-    if (modo === "raio"){
-        let r = raios[raios.length-1];
+    if (mode === "ray"){
+        let r = rays[rays.length-1];
         r.updateAngle(mouseX,mouseY);
     }
 }
@@ -60,18 +68,18 @@ function mouseDragged(){
 function doubleClicked(){
     if (!mouseInside()) return;
     else{
-        if (modo === "poligono"){
-            let p = new Poligono(vertices, cor);
-            poligonos.push(p);
-            vertices = [];
-            cor = color(randomColor(), randomColor(), randomColor(), 128);
+        if (mode === "shape"){
+            // let p = new Shape(vertices);
+            // shapes.push(p);
+            // vertices = [];
+            lastShape().doubleClicked();
         }
     }
 }
 
 // Switches modes between ray casting and polygon drawing.
 // function keyPressed(){
-//     if (key == 'r') modo = "raio";
-//     else modo = "poligono";
+//     if (key == 'r') mode = "ray";
+//     else mode = "shape";
 //     vertices = [];
 // }
