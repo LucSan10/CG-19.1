@@ -3,11 +3,11 @@ class Ray{
         this.v = v;
         this.ang = Math.random()*2*Math.PI;
         this.underMouse = false;
-        rays.push(this);
         this.hypot = h;
         this.tri;
         this.updateTriangle(1);
         this.ext = new Extension(this.v, this.ang);
+        rays.push(this);
     }
 
     updateTriangle(creation = 0){

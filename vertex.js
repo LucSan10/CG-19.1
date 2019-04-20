@@ -18,16 +18,25 @@ class Vertex{
         this.y += by;
     }
 
-    mousePressed(){
-        if (this.underMouse && mode === "edit"){
+    // mousePressed(){
+    //     if (this.underMouse && mode === "edit"){
+            
+    //     }
+    // }
 
-        }
+    mouseDragged(){
+        this.move(mouseX - pmouseX, mouseY - pmouseY);
     }
 
     draw(){
-        push();
-        strokeWeight(5);
-        point(this.x, this.y);
-        pop();
+        if (mode === "edit"){
+            push();
+            strokeWeight(5);
+            if (this.underMouse) stroke(255, 255, 255);
+            else stroke(0,0,0);
+            point(this.x, this.y);
+            pop();
+        }
+        vertex(this.x, this.y);
     }
 }

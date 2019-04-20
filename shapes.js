@@ -7,33 +7,21 @@ class Shape{
     }
 
     mousePressed(){
-        if (!this.finished){
-            let v = new Vertex(mouseX, mouseY);
-            this.vertices.push(v);
-        }
-        else{
-
-        }
+        let v = new Vertex(mouseX, mouseY);
+        this.vertices.push(v);
     }
 
     doubleClicked(){
+        this.vertices.pop();
         this.finished = true;
-        this.c.changeAlpha(128);
+        this.c.changeAlpha(64);
     }
 
     draw(){
         beginShape();
         let colour = color(this.c.R, this.c.G, this.c.B, this.c.A);
         fill(colour);
-        for (let v of this.vertices){
-            push();
-            if (this.finished && mode === "edit"){
-                if (v.mouseDistance(mouseX, mouseY) <= 10) stroke(255, 255, 255);
-                else stroke(0,0,0);
-            }
-            vertex(v.x, v.y);
-            pop();
-        }
+        for (let v of this.vertices) v.draw();
         if (!this.finished) vertex(mouseX,mouseY);
         endShape(CLOSE);
     }

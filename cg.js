@@ -8,8 +8,8 @@ function mousePressed(){
     else{
         let v = new Vertex(mouseX, mouseY);
         if (mode === "ray"){
-            let rIndex = rays.findIndex(r => r.underMouse === true);
-            let vIndex = rays.findIndex(r => r.v.underMouse === true);
+            // let rIndex = rays.findIndex(r => r.underMouse === true);
+            // let vIndex = rays.findIndex(r => r.v.underMouse === true);
             
             //print(rIndex);
             //print(vIndex);
@@ -24,14 +24,12 @@ function mousePressed(){
         }
         if (mode === "shape"){
             if (shapes.length > 0){
-                console.log(lastShape());
                 if (!lastShape().finished){
                     lastShape().mousePressed();
                     return;
                 }
             }
             new Shape(v);
-            console.log(shapes.length);
         }
     }
 }
@@ -40,6 +38,9 @@ function mouseDragged(){
     if (mode === "ray"){
         let r = rays[rays.length-1];
         r.updateAngle(mouseX,mouseY);
+    }
+    if (mode === "edit" && highlighted !== undefined){
+        highlighted.mouseDragged();
     }
 }
 
@@ -83,5 +84,5 @@ function draw() {
     drawShapes();
     // desenharExtensao();
     drawRay();
-    checkDistance();
+    if (!mouseIsPressed && mode === "edit") checkDistance(10);
 }
