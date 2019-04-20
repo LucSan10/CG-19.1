@@ -1,5 +1,5 @@
-function checarDistancia(){
-    if (mode === "ray"){
+function checkDistance(){
+    if (mode === "edit"){
         for (let r of rays){
             let tempX = 5*cos(r.ang);
             let tempY = 5*sin(r.ang);
@@ -21,8 +21,10 @@ function checarDistancia(){
     }
 }
 
-function desenharRay(){
+function drawRay(){
     for (let ray of rays){
+        ray.draw();
+        
         // let rayEnd = new Vertex(
         //     r.v.x + 40*cos(r.ang),
         //     r.v.y + 40*sin(r.ang)
@@ -43,9 +45,8 @@ function desenharRay(){
         // strokeWeight(6);
         // point(r.v.x, r.v.y);
         // pop();
-
+        
         // desenharTriangulo(r, rayEnd, tempX, tempY);
-        ray.draw();
     }
 }
 
@@ -80,8 +81,10 @@ function desenharRay(){
 //     endShape(CLOSE);
 // }
 
-function desenharShapes(){
+function drawShapes(){
     for (let shape of shapes){
+        shape.draw();
+
         // beginShape();
         // let vert = shape.vertices;
         // for(let v of vert){
@@ -93,6 +96,5 @@ function desenharShapes(){
         // }
         // fill(shape.colour);
         // endShape(CLOSE);
-        shape.draw();
     }
 }

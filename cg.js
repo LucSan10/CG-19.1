@@ -80,8 +80,8 @@ function draw() {
     pop();
     
     // desenharShapeAtual();
-    desenharShapes();
+    drawShapes();
     // desenharExtensao();
-    desenharRay();
-    checarDistancia();
+    drawRay();
+    checkDistance();
 }
