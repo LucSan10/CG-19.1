@@ -2,7 +2,6 @@ let mode;
 let drawing = false;
 let highlighted;
 
-
 //------------Only-Polygons------------
 
 // Array of polygons

@@ -3,17 +3,23 @@ class Ray{
         this.v = v;
         this.ang = Math.random()*2*Math.PI;
         this.underMouse = false;
+
         this.hypot = h;
-        this.tri;
-        this.updateTriangle(1);
-        this.ext = new Extension(this.v, this.ang);
+        this.tri = new Vertex(this.v.x, this.v.y);
+        this.ext = new Extension(this.tri, this.ang);
+        this.updateTriangle();
+        this.setParent()
         rays.push(this);
     }
 
-    updateTriangle(creation = 0){
-        if (creation) this.tri = new Vertex(this.v.x, this.v.y);
+    setParent(){
+        this.v.parent = this;
+    }
+
+    updateTriangle(){
         this.tri.x = this.v.x + this.hypot*cos(this.ang);
         this.tri.y = this.v.y + this.hypot*sin(this.ang);
+        this.ext.updateExtension(this.ang);
     }
 
     updateAngle(px, py){
@@ -21,7 +27,6 @@ class Ray{
         let deltaX = (px - this.v.x);
         this.ang = atan2(deltaY,deltaX);
         this.updateTriangle();
-        this.ext.updateExtension(this.ang);
     }
 
     mouseDistance(bx, by){
@@ -29,6 +34,11 @@ class Ray{
         let deltaY = Math.pow(this.tri.y - by, 2);
         let distance = Math.sqrt(deltaX + deltaY);
         return distance;
+    }
+
+    mouseDragged(){
+        if (this.underMouse) this.updateAngle(mouseX, mouseY);
+        else this.updateTriangle();
     }
 
     draw(){

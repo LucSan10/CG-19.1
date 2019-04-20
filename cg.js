@@ -41,6 +41,9 @@ function mouseDragged(){
     }
     if (mode === "edit" && highlighted !== undefined){
         highlighted.mouseDragged();
+        if (highlighted.parent !== undefined){
+            highlighted.parent.mouseDragged();
+        }
     }
 }
 

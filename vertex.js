@@ -3,7 +3,7 @@ class Vertex{
         this.x = x;
         this.y = y;
         this.underMouse = false;
-        this.locked = false;
+        this.parent;
     }
     
     mouseDistance(bx, by){
