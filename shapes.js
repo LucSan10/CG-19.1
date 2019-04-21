@@ -20,7 +20,6 @@ class Shape{
     mouseDragged(){
         let index = shapes.findIndex(shape => shape === this);
         for (let ray of rays){
-            ray.ext.intersections = [];
             ray.ext.createIntersections(this, index, 1);
         }
     }
