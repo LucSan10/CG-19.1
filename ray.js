@@ -6,7 +6,8 @@ class Ray{
 
         this.hypot = h;
         this.tri = new Vertex(this.v.x, this.v.y);
-        this.ext = new Extension(this.tri, this.ang);
+        this.ext = new Extension(this.v, this.ang);
+        
         this.updateTriangle();
         this.setParent()
         rays.push(this);
@@ -46,8 +47,8 @@ class Ray{
         let tempY = 5*sin(this.ang);
         
         push();
-        if (this.v.underMouse) stroke(255,255,255);
-        else stroke(0,0,0)
+        if (this.v.underMouse) stroke(255);
+        else stroke(0)
         strokeWeight(6);
         point(this.v.x, this.v.y);
         pop();
@@ -58,8 +59,8 @@ class Ray{
         pop();
         
         push();
-        if (this.underMouse) stroke(255,255,255);
-        else stroke(0,0,0);
+        if (this.underMouse) stroke(255);
+        else stroke(0);
         
         fill(0);
         triangle(

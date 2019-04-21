@@ -29,7 +29,9 @@ function checkedRadio(cancel = 1){
     for (let m of modes){
         if (m.checked) mode = m.value;
     }    
-    if (cancel) cancelDrawing();
+    if (cancel){
+        if (shapes.length) cancelDrawing();
+    }
 }    
 
 function random255(){
@@ -97,4 +99,51 @@ function drawShapes(){
     for (let shape of shapes){
         shape.draw();
     }    
+}
+
+function calculateIntersection(v1, v2, v3, v4){
+    let a = (v2.x - v1.x);
+    let b = (v3.x - v4.x);
+    let c = (v2.y - v1.y);
+    let d = (v3.y - v4.y);
+    
+    let deltaX = (v3.x - v1.x);
+    let deltaY = (v3.y - v1.y);
+    
+    let det = (a*d) - (b*c);
+    if (det !== 0){
+        let alpha = ((d*deltaX) - (b*deltaY))/det;
+        let beta = ((a*deltaY) - (c*deltaX))/det;
+        if ((0 <= alpha && alpha <= 1) && (0 <= beta && beta <= 1)){
+            let interX = v1.x + alpha*a;
+            let interY = v1.y + alpha*c;
+            let intersection = new Vertex(interX, interY);
+            let inter = new Intersection(beta, intersection);
+            return inter;
+        };
+    }
+    return 0;
+}
+
+function isInsideShape(){
+    let position = new Vertex(mouseX, mouseY);
+    let ray = new Ray(position, 0);
+    let extension = ray.ext;
+    extension.updateIntersections();
+    let intersectionsLength = extension.intersections.length;
+    return (intersectionsLength % 2)
+}
+
+function binarySearch(array, x){
+    let start = 0;
+    let end = array.length-1;
+    let mid;
+    
+    while(start <= end){
+        mid = int((start + end)/2);
+        if (x === array[mid].beta) return mid;
+        if (x < array[mid].beta) end = mid - 1;
+        else start = mid + 1; 
+    }
+    return start;
 }

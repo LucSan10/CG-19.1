@@ -32,8 +32,8 @@ class Vertex{
         if (mode === "edit"){
             push();
             strokeWeight(5);
-            if (this.underMouse) stroke(255, 255, 255);
-            else stroke(0,0,0);
+            if (this.underMouse) stroke(255);
+            else stroke(0);
             point(this.x, this.y);
             pop();
         }

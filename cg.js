@@ -78,14 +78,12 @@ function draw() {
     
     push();
     noFill();
-    if (mouseIsPressed) stroke(255, 255, 255);
-    else stroke(0, 0, 0);
+    if (mouseIsPressed) stroke(255);
+    else stroke(0);
     ellipse(mouseX, mouseY, 20, 20);
     pop();
     
-    // desenharShapeAtual();
     drawShapes();
-    // desenharExtensao();
     drawRay();
     if (!mouseIsPressed && mode === "edit") checkDistance(10);
 }
