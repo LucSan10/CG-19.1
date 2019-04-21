@@ -101,7 +101,7 @@ class Extension{
                 push();
                 strokeWeight(5);
         
-                if (i % 2 + checkInside) stroke(255, 64, 64);
+                if ((i + checkInside) % 2) stroke(255, 64, 64);
                 else stroke(64, 64, 255);
         
                 point(vertex.x, vertex.y);
