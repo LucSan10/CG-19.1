@@ -5,32 +5,20 @@ function mouseInside(){
 // Inserts position of mouse when pressed into vertex array.
 function mousePressed(){
     if (!mouseInside()) return;
-    else{
-        let v = new Vertex(mouseX, mouseY);
-        if (mode === "ray"){
-            // let rIndex = rays.findIndex(r => r.underMouse === true);
-            // let vIndex = rays.findIndex(r => r.v.underMouse === true);
-            
-            //print(rIndex);
-            //print(vIndex);
-            
-            /*if (){
-                selecionado.setRay()
-            }
-            
-            else{*/
-                let r = new Ray(v, 40);
-                //}
+    let v = new Vertex(mouseX, mouseY);
+    
+    if (mode === "ray") new Ray(v, 40);
+
+    if (mode === "shape"){
+        if (shapes.length > 0){
+            let checkContinue = lastShape().mousePressed();
+            if (checkContinue) return;
         }
-        if (mode === "shape"){
-            if (shapes.length > 0){
-                if (!lastShape().finished){
-                    lastShape().mousePressed();
-                    return;
-                }
-            }
-            new Shape(v);
-        }
+        new Shape(v);
+    }
+
+    if (mode === "edit"){
+
     }
 }
 
@@ -39,6 +27,7 @@ function mouseDragged(){
         let r = rays[rays.length-1];
         r.updateAngle(mouseX,mouseY);
     }
+
     if (mode === "edit" && highlighted !== undefined){
         highlighted.mouseDragged();
         if (highlighted.parent !== undefined){
@@ -50,14 +39,7 @@ function mouseDragged(){
 // Finishes creating a polygon.
 function doubleClicked(){
     if (!mouseInside()) return;
-    else{
-        if (mode === "shape"){
-            // let p = new Shape(vertices);
-            // shapes.push(p);
-            // vertices = [];
-            lastShape().doubleClicked();
-        }
-    }
+    else if (mode === "shape") lastShape().doubleClicked();
 }
 
 // Switches modes between ray casting and polygon drawing.
@@ -74,16 +56,19 @@ function setup() {
 
 // Keeps old polygons/rays on-screen.
 function draw() {
-    background(200);
+    background(220);
     
     push();
     noFill();
+
     if (mouseIsPressed) stroke(255);
     else stroke(0);
+    
     ellipse(mouseX, mouseY, 20, 20);
     pop();
     
     drawShapes();
     drawRay();
+    
     if (!mouseIsPressed && mode === "edit") checkDistance(10);
 }

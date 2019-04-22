@@ -9,11 +9,11 @@ class Extension{
     constructor(v, ang){
         this.intersections = [];
         this.v = v;
+        
         this.alpha = 255;
         this.end = new Vertex(this.v.x, this.v.y);
         
         this.updateExtension(ang);
-        this.updateIntersections();
     }
 
     binaryInsert(array, intersection){

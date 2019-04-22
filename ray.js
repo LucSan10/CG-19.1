@@ -1,5 +1,5 @@
 class Ray{
-    constructor(v, h){
+    constructor(v, h, push = 1){
         this.v = v;
         this.ang = Math.random()*2*Math.PI;
         this.underMouse = false;
@@ -10,7 +10,7 @@ class Ray{
         
         this.updateTriangle();
         this.setParent()
-        rays.push(this);
+        if (push) rays.push(this);
     }
 
     setParent(){

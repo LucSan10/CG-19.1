@@ -45,7 +45,7 @@ function randomColor(alpha = 255){
 function checkDistance(radius){
     let newDistance;
     let closest;
-
+    
     for (let shape of shapes){
         for (let vertex of shape.vertices){
             newDistance = vertex.mouseDistance(mouseX, mouseY);
@@ -53,18 +53,9 @@ function checkDistance(radius){
             if (newDistance <= radius){
                 radius = newDistance;
                 closest = vertex;
-            }     
-        }    
-        
-        // Inside Shape
-
-        // newDistance = rays[i].v.mouseDistance(mouseX, mouseY)
-        // if (newDistance <= radius){
-        //     radius = newDistance;    
-        //     rays[i].v.underMouse = true;
-        // } 
-        // else rays[i].v.underMouse = false;
-    }    
+            }
+        }
+    }
     
     for (let ray of rays){
         newDistance = ray.mouseDistance(mouseX, mouseY);
@@ -86,8 +77,15 @@ function checkDistance(radius){
     }
     
     highlighted = closest;
-    if (highlighted !== undefined) highlighted.underMouse = true;
-}    
+    if (highlighted !== undefined){
+        highlighted.underMouse = true;
+        return;
+    }
+    else{
+        [index, highlighted] = highlightShape();
+        if (index >= 0) highlighted.underMouse = true;
+    }
+}
 
 function drawRay(){
     for (let ray of rays){
@@ -125,15 +123,6 @@ function calculateIntersection(v1, v2, v3, v4){
     return 0;
 }
 
-function isInsideShape(){
-    let position = new Vertex(mouseX, mouseY);
-    let ray = new Ray(position, 0);
-    let extension = ray.ext;
-    extension.updateIntersections();
-    let intersectionsLength = extension.intersections.length;
-    return (intersectionsLength % 2)
-}
-
 function binarySearch(array, x){
     let start = 0;
     let end = array.length-1;
@@ -146,4 +135,16 @@ function binarySearch(array, x){
         else start = mid + 1; 
     }
     return start;
+}
+
+function highlightShape(){
+    let i;
+    let shape;
+    for (i = shapes.length-1; i >= 0; i--){
+        shape = shapes[i];
+        if (shape.isInsideShape()) break; 
+    }
+
+    if (i >= 0) return [i, shape];
+    else return [i, undefined];
 }

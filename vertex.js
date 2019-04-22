@@ -18,12 +18,6 @@ class Vertex{
         this.y += by;
     }
 
-    // mousePressed(){
-    //     if (this.underMouse && mode === "edit"){
-            
-    //     }
-    // }
-
     mouseDragged(){
         this.move(mouseX - pmouseX, mouseY - pmouseY);
     }
