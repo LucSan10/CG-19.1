@@ -2,6 +2,10 @@ function mouseInside(){
     return ((0 <= mouseX) && (mouseX <= width) && (0 <= mouseY) && (mouseY <= height));
 }
 
+function mouseMoved(){
+    if (mode === "edit") checkDistance(10);
+}
+
 // Inserts position of mouse when pressed into vertex array.
 function mousePressed(){
     if (!mouseInside()) return;
@@ -16,13 +20,10 @@ function mousePressed(){
         }
         new Shape(v);
     }
-
-    if (mode === "edit"){
-
-    }
 }
 
 function mouseDragged(){
+    if (!mouseInside()) return;
     if (mode === "ray"){
         let r = rays[rays.length-1];
         r.updateAngle(mouseX,mouseY);
@@ -69,6 +70,4 @@ function draw() {
     
     drawShapes();
     drawRay();
-    
-    if (!mouseIsPressed && mode === "edit") checkDistance(10);
 }
