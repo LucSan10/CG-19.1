@@ -18,8 +18,8 @@ class Vertex{
         this.y += by;
     }
 
-    mouseDragged(){
-        this.move(mouseX - pmouseX, mouseY - pmouseY);
+    mouseDragged(mx, px, my, py){
+        this.move(mx - px, my - py);
     }
 
     draw(){

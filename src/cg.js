@@ -6,6 +6,29 @@ function mouseMoved(){
     if (mode === "edit") checkDistance(10);
 }
 
+function keyPressed(){
+    if (key === "Escape"){
+
+        if (mode === "shape"){
+            let s = lastShape();
+            if (!s.finished){
+                shapes.pop();
+                delete s;
+            }
+        }
+    
+        if (mode === "ray"){
+            let r = lastRay();
+            if (!r.finished){
+                rays.pop();
+                delete r;
+            }
+        }
+    }
+
+
+}
+
 // Inserts position of mouse when pressed into vertex array.
 function mousePressed(){
     if (!mouseInside()) return;
@@ -25,16 +48,20 @@ function mousePressed(){
 function mouseDragged(){
     if (!mouseInside()) return;
     if (mode === "ray"){
-        let r = rays[rays.length-1];
-        r.updateAngle(mouseX,mouseY);
+        let r = lastRay();
+        if (!r.finished) r.updateAngle(mouseX,mouseY);
     }
 
     if (mode === "edit" && highlighted !== undefined){
-        highlighted.mouseDragged();
+        highlighted.mouseDragged(mouseX, pmouseX, mouseY, pmouseY);
         if (highlighted.parent !== undefined){
             highlighted.parent.mouseDragged();
         }
     }
+}
+
+function mouseReleased(){
+    if (mode === "ray") lastRay().mouseReleased();
 }
 
 // Finishes creating a polygon.
@@ -42,13 +69,6 @@ function doubleClicked(){
     if (!mouseInside()) return;
     else if (mode === "shape") lastShape().doubleClicked();
 }
-
-// Switches modes between ray casting and polygon drawing.
-// function keyPressed(){
-//     if (key == 'r') mode = "ray";
-//     else mode = "shape";
-//     vertices = [];
-// }
 
 function setup() {
     createCanvas(innerWidth,innerHeight);

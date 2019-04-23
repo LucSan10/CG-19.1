@@ -16,11 +16,19 @@ let rays = [];
 
 function lastShape(){
     return shapes[shapes.length-1];
-}    
+}
+
+function lastRay(){
+    return rays[rays.length-1];
+}
 
 function cancelDrawing(){
     if (mode !== "shape"){
-        if (!lastShape().finished) shapes.pop();
+        let s = lastShape();
+        if (!s.finished){
+            shapes.pop();
+            delete s;
+        }
     }    
 }    
 

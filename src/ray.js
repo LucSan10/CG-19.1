@@ -3,6 +3,7 @@ class Ray{
         this.v = v;
         this.ang = Math.random()*2*Math.PI;
         this.underMouse = false;
+        this.finished = false;
 
         this.hypot = h;
         this.tri = new Vertex(this.v.x, this.v.y);
@@ -37,9 +38,13 @@ class Ray{
         return distance;
     }
 
-    mouseDragged(){
-        if (this.underMouse) this.updateAngle(mouseX, mouseY);
+    mouseDragged(mx, px, my, py){
+        if (this.underMouse) this.updateAngle(mx, my);
         else this.updateTriangle();
+    }
+
+    mouseReleased(){
+        this.finished = true;
     }
 
     draw(){

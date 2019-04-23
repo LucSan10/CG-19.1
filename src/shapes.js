@@ -22,14 +22,14 @@ class Shape{
         return 0;
     }
 
-    mouseDragged(){
+    mouseDragged(mx, px, my, py){
         let index = shapes.findIndex(shape => shape === this);
         for (let ray of rays){
             ray.ext.createIntersections(this, index, 1);
         }
 
         if (this.underMouse){
-            for (let vertex of this.vertices) vertex.mouseDragged();
+            for (let vertex of this.vertices) vertex.mouseDragged(mx, px, my, py);
         }
     }
 
