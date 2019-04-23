@@ -1,5 +1,5 @@
 # Computa&ccedil;&atilde;o Gr&aacute;fica [EEL882]
-## Aluno: Lucas Santiago Peixoto [DRE: 116023847]
+## Aluno: Lucas Santiago Peixoto [DRE: 116038999]
 ## Professor: Cláudio Esperança
 ### Trabalho 2 - Ray-Casting em 2D
 
