@@ -45,6 +45,8 @@ class Ray{
 
     mouseReleased(){
         this.finished = true;
+        let operation = {what: 1};
+        stack.addUndo(operation);
     }
 
     draw(){
