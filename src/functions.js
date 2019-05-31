@@ -2,8 +2,6 @@ let mode;
 let drawing = false;
 let highlighted;
 
-let stack = new Stack();
-
 //------------Only-Polygons------------
 
 // Array of polygons
@@ -91,7 +89,6 @@ function checkDistance(radius){
         highlighted.underMouse = true;
         return;
     }
-
     else{
         [index, highlighted] = highlightShape();
         if (index >= 0) highlighted.underMouse = true;
@@ -158,32 +155,4 @@ function highlightShape(){
 
     if (i >= 0) return [i, shape];
     else return [i, undefined];
-}
-
-function addMoveUndo(highlighted){
-    let operation = {};
-    
-    if (highlighted !== undefined){
-        let className = highlighted.constructor.name;
-        operation["which"] = highlighted;
-
-        if (className === "Vertex"){
-            operation["where"] = {x: highlighted.x, y: highlighted.y};
-            let parentClassName = highlighted.parent.constructor.name;
-        
-            if (parentClassName === "Shape") operation["what"] = 2;
-            if (parentClassName === "Ray") operation["what"] = 3;
-        }
-        
-        if (className === "Ray"){
-            operation["where"] = highlighted.angle;
-            operation["what"] = 4;
-        }
-
-        if (className === "Shape"){
-            operation["where"] = {x: mouseX, y: mouseY};
-            operation["what"] = 5;
-        }
-    }
-    stack.addUndo(operation);
 }

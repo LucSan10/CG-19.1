@@ -26,16 +26,15 @@ function keyPressed(){
         }
     }
 
-    if (key === "r") stack.redo();
-    if (key === "u") stack.undo();
+
 }
 
 // Inserts position of mouse when pressed into vertex array.
 function mousePressed(){
     if (!mouseInside()) return;
     let v = new Vertex(mouseX, mouseY);
-
-    stack.locked = true;
+    
+    if (mode === "ray") new Ray(v, 40);
 
     if (mode === "shape"){
         if (shapes.length > 0){
@@ -44,43 +43,31 @@ function mousePressed(){
         }
         new Shape(v);
     }
-
-    if (mode === "ray") new Ray(v, 40);
-    
-    if (mode === "edit") addMoveUndo(highlighted);
 }
 
 function mouseDragged(){
     if (!mouseInside()) return;
     if (mode === "ray"){
         let r = lastRay();
-        if (!r.finished) r.updateAngle(mouseX, mouseY);
+        if (!r.finished) r.updateAngle(mouseX,mouseY);
     }
 
     if (mode === "edit" && highlighted !== undefined){
         highlighted.mouseDragged(mouseX, pmouseX, mouseY, pmouseY);
         if (highlighted.parent !== undefined){
-            highlighted.parent.mouseDragged(mouseX, pmouseX, mouseY, pmouseY);
+            highlighted.parent.mouseDragged();
         }
     }
 }
 
 function mouseReleased(){
-    if (mode === "shape") return;
-
-    stack.locked = false;
-    if (mode === "ray"){
-        lastRay().mouseReleased();
-    }
+    if (mode === "ray") lastRay().mouseReleased();
 }
 
 // Finishes creating a polygon.
 function doubleClicked(){
     if (!mouseInside()) return;
-    else if (mode === "shape"){
-        stack.locked = false;
-        lastShape().doubleClicked();
-    }
+    else if (mode === "shape") lastShape().doubleClicked();
 }
 
 function setup() {

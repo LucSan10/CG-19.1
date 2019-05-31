@@ -40,9 +40,6 @@ class Shape{
         for (let ray of rays){
             ray.ext.createIntersections(this, shapes.length-1);
         }
-
-        let operation = {what: 0}
-        stack.addUndo(operation);
     }
 
     isInsideShape(){
