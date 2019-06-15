@@ -42,6 +42,7 @@ class Arcball{
 			this.object.position.divideScalar(_pivot.children.length);
 			_pivot.position.copy(this.object.position);
 			_pivot.position.multiplyScalar(-1);
+			console.log("hey");
 		}
 	}
 
@@ -52,6 +53,7 @@ class Arcball{
 		sphere.position.copy(this.object.position);
 		sphere.name = "arcball";
 		this.arcball = sphere;
+		qs.copy(this.object.quaternion);
 	}
 	
 	createSphere(radius){
@@ -128,18 +130,18 @@ function onDocumentDoubleClick(event){
 	if (!rotation){
 		if (INTERSECTED) arcball = new Arcball(INTERSECTED);
 		else arcball = new Arcball(center);
-		arcball.show();
+		// arcball.show();
 		dragControls.deactivate();
 	}
 	
 	else{
-		arcball.remove();
+		// arcball.remove();
 
 		if (INTERSECTED === null || INTERSECTED === arcball.object) dragControls.activate();
 		else{
 			rotation = !rotation;
 			arcball = new Arcball(INTERSECTED);
-			arcball.show();
+			// arcball.show();
 		}
 	}
 
@@ -248,12 +250,17 @@ function initObjects(n, pivot){
 		
 		objects.push(mesh);
 		pivot.add(mesh);
-
+		center.position.add(mesh.position);
 		// scene.add(sphere);
 	}
+
+	center.position.divideScalar(n);
+	pivot.position.copy(center.position);
+	pivot.position.multiplyScalar(-1);
 	
+	console.log(center.rotation);
+
 	qs = new THREE.Quaternion();
-	qs.copy(center.quaternion);
 	qr = new THREE.Quaternion(1, 2, 3, 4).normalize();
 
 	// box = new THREE.BoxHelper(center);
@@ -293,12 +300,15 @@ function initObjects(n, pivot){
 
 function render(){
 	controls.update();
+	center.updateMatrix();
 
 	// if (controls.enabled) highlightObject(intersects);
 
 	// center.rotation.y = (center.rotation.y + Math.PI/180)%(2*Math.PI);
-	// t = t+0.01;
-	// THREE.Quaternion.slerp(qs, qr, center.quaternion, t);
+	if (rotation){
+		t = t+0.01;
+		THREE.Quaternion.slerp(qs, qr, arcball.object.quaternion, t);
+	}
 }
 
 function animate(){
