@@ -2,7 +2,7 @@
 ## Aluno: Lucas Santiago Peixoto [DRE: 116038999]
 ## Professor: Cl&aacute;udio Esperan&ccedil;a&nbsp;
 &nbsp;
-### Trabalho 2 - Ray-Casting em 2D
+### Trabalho 2 - Ray-Casting em 2D (assignment-1)
 #### Instru&ccedil;&otilde;es:
 
 Todas as instruções a seguir devem ser executadas no espaço desenhável, ou seja, a parte com fundo cinza.
@@ -30,7 +30,7 @@ Para mudar de modos, basta selecionar os botões circulares no topo da página.
 OBS: Caso uma forma sobrepor a si mesma, não será possível selecioná-la ou arrastá-la na área sobreposta.
 
 &nbsp;
-### Trabalho 3 - Manipula&ccedil;&atilde;o de Objetos com three.JS
+### Trabalho 3 - Manipula&ccedil;&atilde;o de Objetos com three.JS (assignment-2)
 
 #### Instruções:
 
