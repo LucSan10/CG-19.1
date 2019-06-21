@@ -1,9 +1,9 @@
 # Computa&ccedil;&atilde;o Gr&aacute;fica [EEL882]
 ## Aluno: Lucas Santiago Peixoto [DRE: 116038999]
 ## Professor: Cl&aacute;udio Esperan&ccedil;a&nbsp;
+&nbsp;
 ### Trabalho 2 - Ray-Casting em 2D
 #### Instru&ccedil;&otilde;es:
-&nbsp;
 
 Todas as instruções a seguir devem ser executadas no espaço desenhável, ou seja, a parte com fundo cinza.
 
