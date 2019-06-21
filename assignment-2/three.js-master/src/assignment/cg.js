@@ -90,7 +90,6 @@ class Arcball{
 		cross.cross(mouse3f);
 		let angle = dot.dot(mouse3f);
 		
-		let objQuat = this.object.quaternion.clone().normalize();
 		let fatherQuat = this.object.parent.quaternion.clone().normalize();
 		let invFatherQuat = fatherQuat.clone();
 		invFatherQuat.inverse().normalize();
@@ -168,16 +167,19 @@ function onDocumentDoubleClick(event){
 	
 	else{
 		arcball.remove();
-		if (INTERSECTED === null || INTERSECTED === arcball.object) dragControls.activate();
+		if (INTERSECTED === null || INTERSECTED === arcball.object){
+			dragControls.activate();
+		}
 		else{
 			rotation = !rotation;
+			controls.enabled = !controls.enabled
 			arcball = new Arcball(INTERSECTED);
 			arcball.show();
 		}
 	}
 
 	rotation = !rotation;
-	controls.enabled = false;
+	controls.enabled = !controls.enabled;
 }
 
 function setControlsOptions(controls){
@@ -203,9 +205,6 @@ function init(){
 	parent = new THREE.Group();
 	parent.name = "group";
 	scene.add(parent);
-	
-	let axesHelper = new THREE.AxesHelper(200);
-	scene.add(axesHelper);
 	
 	initObjects(4, parent);
 	
